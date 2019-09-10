@@ -15,6 +15,7 @@ export default function Header(props) {
       />
       <Filter 
         printFilter={props.printFilter}
+        bookFilter={props.bookFilter}
       />
     </header>
   )

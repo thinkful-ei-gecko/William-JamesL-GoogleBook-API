@@ -7,7 +7,7 @@ export default function Filter(props){
     <div className ='filter'>
       <form className='filter'>
         <PrintType printFilter={props.printFilter}/>
-        <BookType />
+        <BookType bookFilter={props.bookFilter}/>
       </form>
     </div>
   )

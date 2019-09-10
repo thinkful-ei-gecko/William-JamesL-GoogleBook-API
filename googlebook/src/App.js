@@ -17,7 +17,7 @@ class App extends Component {
   ],
     searchTerm: '',
     printType: '',
-    bookType:'No filter'
+    bookType:''
   }
 
   // setSearchTerm = (userInput) => {
@@ -47,6 +47,9 @@ class App extends Component {
         books: data.items
       })
     })
+    .catch(err => {
+      alert(`Error: ${err.message}`);
+    })
   }
 
   handlePrintFilter = (e) => {
@@ -65,6 +68,30 @@ class App extends Component {
         books: data.items
       })
     })
+    .catch(err => {
+      alert(`Error: ${err.message}`);
+    })
+  }
+
+  handleBookFilter = (e) => {
+    this.setState({
+      bookType: e.target.value
+    })
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}?filter=${this.state.bookType}`)
+    .then(res=>{
+      if(res.ok){
+        return res.json()
+      }
+      return Promise.reject('Something went wrong')
+    })
+    .then(data => {
+      this.setState({
+        books: data.items
+      })
+    })
+    .catch(err => {
+      alert(`Error: ${err.message}`);
+    })
   }
 
   render() {
@@ -76,6 +103,7 @@ class App extends Component {
           searchUpdate={this.handleChange}
           state={this.state}
           printFilter={this.handlePrintFilter}
+          bookFilter={this.handleBookFilter}
         />
        
         <ul className="book-list">
