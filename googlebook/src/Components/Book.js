@@ -1,11 +1,17 @@
 import React from 'react';
 
 export default function Book (props) {
-  const title = props.books.map(item => item.volumeInfo.title);
-  const author = props.books.map(item => item.volumeInfo.authors);
-  const price = props.books.map(item => item.saleInfo.retailPrice);
-  const desc = props.books.map(item => item.volumeInfo.description);
-  const img = props.books.map(item => item.volumeInfo.thumbnail);
+  const title = props.book.volumeInfo.title;
+  const author = props.book.volumeInfo.authors.join(', ');
+  const desc = props.book.volumeInfo.description;
+  const img = props.book.volumeInfo.imageLinks.thumbnail;
+  let price = 0;
+  if(props.book.saleInfo.retailPrice) {
+    price = props.book.saleInfo.retailPrice.amount;
+  }
+
+  // console.log(title, author, price, desc, img);
+
   return (
       <li className="book">
         <img src={img} alt="book thumbnail" />

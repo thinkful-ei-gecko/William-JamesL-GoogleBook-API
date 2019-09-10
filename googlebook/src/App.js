@@ -4,24 +4,30 @@ import BookList from './Components/BookList';
 import './App.css';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-      this.state = {
-        books: [],
-        searchTerm: '',
-        printType: 'all',
-        bookType:'No filter'
-      }
+  state = {
+    books: [
+    //   {
+    //   title,
+    //   author,
+    //   price,
+    //   desc,
+    //   img
+    // }
+  ],
+    searchTerm: null,
+    printType: 'all',
+    bookType:'No filter'
   }
 
-  // handleChange(event){
-  //   this.setState({
-  //     searchTerm: event.target.value
-  //   })
-  // }
+  setSearchTerm = (userInput) => {
+    this.setState ({
+      searchTerm: userInput
+    })
+  }
 
-  fetchBooks () {
-    fetch(`https://www.googleapis.com/books/v1/volumes/?q=harrypotter`)
+  
+  fetchBooks = (bookSearch) => {
+    fetch(`https://www.googleapis.com/books/v1/volumes/?q=${bookSearch}`)
     .then(res => {
       if(res.ok){
         return res.json();
@@ -29,6 +35,7 @@ class App extends Component {
       return Promise.reject('Something went wrong')
     })
     .then(data => {
+      console.log(data.items);
       this.setState({  
         books: data.items
       })
@@ -39,10 +46,12 @@ class App extends Component {
     return (
       <main className="App">
         <Header 
-          handleSearchForm={this.fetchBooks}
-          // changeSearchTerm={this.handleChange}
+          displaySearchForm={this.fetchBooks}
+          handleSearchTerm={this.setSearchTerm}
         />
-        <BookList books={this.state.books}/>
+        <ul className="book-list">
+          <BookList books={this.state.books}/>  
+        </ul>
       </main>
     );
   }

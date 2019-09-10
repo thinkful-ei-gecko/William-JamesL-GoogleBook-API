@@ -5,10 +5,12 @@ export default function Search (props) {
         <div className="search-form">
             <form className="form-search" onSubmit={e => {
                 e.preventDefault();
-                props.handleSearchForm()
+                props.displaySearchForm(/* TODO: provide a search term */)
             }}>
                 <label htmlFor="book-search">Search:</label>
-                <input type="text" id="book-search" />
+                <input type="text" id="book-search" onChange={e => {
+                    props.handleSearchTerm(e.target.value)
+                 }} />
                 <button type="submit">Search</button>
             </form>
         </div>
