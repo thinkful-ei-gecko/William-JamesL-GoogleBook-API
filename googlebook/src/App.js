@@ -1,46 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Components/Header';
 import BookList from './Components/BookList';
 import './App.css';
 
-class App extends React.Component {
-  // state = {
-  //   titles,
-  //   authors,
-  //   price,
-  //   desc,
-  //   img: ''
-  // }
+class App extends Component {
+  state = {
+    books: [
+    //   {
+    //   title,
+    //   author,
+    //   price,
+    //   desc,
+    //   img
+    // }
+  ],
+    searchTerm: null,
+    printType: 'all',
+    bookType:'No filter'
+  }
 
-  fetchBooks(bookSearch){
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookSearch}`)
+  
+  // ?q=${bookSearch}
+  fetchBooks(){
+    fetch(`https://www.googleapis.com/books/v1/volumes/`)
     .then(res => {
       if(res.ok){
-        return res.json()
+        return res.json();
       }
       Promise.reject('Something went wrong')
     })
     .then(data => {
-      const titles = data.items.map(item => item.volumeInfo.title);
-      const authors = data.items.map(item => item.volumeInfo.authors);
-      const price = data.items.map(item => item.saleInfo.retailPrice);
-      const desc = data.items.map(item => item.volumeInfo.description);
-      const img = data.items.map(item => item.volumeInfo.thumbnail);
+      console.log(data);
       this.setState({
-        titles,
-        authors,
-        price,
-        desc,
-        img
+        books: data.items
       })
     })
   }
 
-  render(){
+  render() {
     return (
       <main className="App">
         <Header />
-        <BookList />
+        <BookList books={this.state.books}/>
       </main>
     );
   }
