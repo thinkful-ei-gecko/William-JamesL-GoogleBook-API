@@ -14,20 +14,26 @@ class App extends Component {
     //   img
     // }
   ],
-    searchTerm: null,
+    searchTerm: '',
     printType: 'all',
     bookType:'No filter'
   }
 
-  setSearchTerm = (userInput) => {
-    this.setState ({
-      searchTerm: userInput
+  // setSearchTerm = (userInput) => {
+  //   this.setState ({
+  //     searchTerm: userInput
+  //   })
+  // }
+
+  handleChange = (e) => {
+    this.setState({
+      searchTerm: e.target.value
     })
   }
 
   
   fetchBooks = (bookSearch) => {
-    fetch(`https://www.googleapis.com/books/v1/volumes/?q=${bookSearch}`)
+    fetch(`https://www.googleapis.com/books/v1/volumes/?q=${this.state.searchTerm}`)
     .then(res => {
       if(res.ok){
         return res.json();
@@ -48,6 +54,8 @@ class App extends Component {
         <Header 
           displaySearchForm={this.fetchBooks}
           handleSearchTerm={this.setSearchTerm}
+          searchUpdate={this.handleChange}
+          state={this.state}
         />
         <ul className="book-list">
           <BookList books={this.state.books}/>  

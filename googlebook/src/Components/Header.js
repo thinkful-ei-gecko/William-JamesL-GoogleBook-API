@@ -10,6 +10,8 @@ export default function Header(props) {
       <Search 
         displaySearchForm={props.displaySearchForm}
         handleSearchTerm={props.handleSearchTerm}
+        searchUpdate={props.searchUpdate}
+        state={props.state}
       />
       <Filter />
     </header>
