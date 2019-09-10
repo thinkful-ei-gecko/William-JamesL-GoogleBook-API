@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Components/Header';
 import BookList from './Components/BookList';
+
 import './App.css';
 
 class App extends Component {
@@ -15,7 +16,7 @@ class App extends Component {
     // }
   ],
     searchTerm: '',
-    printType: 'all',
+    printType: '',
     bookType:'No filter'
   }
 
@@ -48,6 +49,24 @@ class App extends Component {
     })
   }
 
+  handlePrintFilter = (e) => {
+    this.setState({
+      printType: e.target.value
+    })
+    fetch(`https://www.googleapis.com/books/v1/volumes/?q=${this.state.searchTerm}?printType=${this.state.printType}`)
+    .then(res=>{
+      if(res.ok){
+        return res.json()
+      }
+      return Promise.reject('Something went wrong')
+    })
+    .then(data => {
+      this.setState({
+        books: data.items
+      })
+    })
+  }
+
   render() {
     return (
       <main className="App">
@@ -56,7 +75,9 @@ class App extends Component {
           handleSearchTerm={this.setSearchTerm}
           searchUpdate={this.handleChange}
           state={this.state}
+          printFilter={this.handlePrintFilter}
         />
+       
         <ul className="book-list">
           <BookList books={this.state.books}/>  
         </ul>

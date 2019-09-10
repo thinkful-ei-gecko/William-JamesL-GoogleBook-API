@@ -13,7 +13,9 @@ export default function Header(props) {
         searchUpdate={props.searchUpdate}
         state={props.state}
       />
-      <Filter />
+      <Filter 
+        printFilter={props.printFilter}
+      />
     </header>
   )
 }
