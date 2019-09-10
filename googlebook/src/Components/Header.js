@@ -9,6 +9,7 @@ export default function Header(props) {
       <h1>Google Book Search</h1>
       <Search 
         handleSearchForm={props.handleSearchForm}
+        // changeSearch={props.changeSearchTerm}
       />
       <Filter />
     </header>
