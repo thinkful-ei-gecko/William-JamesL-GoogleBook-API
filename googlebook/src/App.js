@@ -1,15 +1,16 @@
 import React from 'react';
-
+import Header from './Components/Header';
+import BookList from './Components/BookList';
 import './App.css';
 
-class App extends Component {
-  state = {
-    titles,
-    authors,
-    price,
-    desc,
-    img: ''
-  }
+class App extends React.Component {
+  // state = {
+  //   titles,
+  //   authors,
+  //   price,
+  //   desc,
+  //   img: ''
+  // }
 
   fetchBooks(bookSearch){
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookSearch}`)
@@ -38,7 +39,8 @@ class App extends Component {
   render(){
     return (
       <main className="App">
-
+        <Header />
+        <BookList />
       </main>
     );
   }
