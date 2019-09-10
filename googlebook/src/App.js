@@ -21,26 +21,28 @@ class App extends Component {
 
   
   // ?q=${bookSearch}
-  fetchBooks(){
-    fetch(`https://www.googleapis.com/books/v1/volumes/`)
+  fetchBooks (bookSearch) {
+    fetch(`https://www.googleapis.com/books/v1/volumes/?q=harrypotter`)
     .then(res => {
       if(res.ok){
         return res.json();
       }
-      Promise.reject('Something went wrong')
+      return Promise.reject('Something went wrong')
     })
     .then(data => {
       console.log(data);
-      this.setState({
-        books: data.items
-      })
+      // this.setState({  
+      //   books: data.items
+      // })
     })
   }
 
   render() {
     return (
       <main className="App">
-        <Header />
+        <Header 
+          handleSearchForm={this.fetchBooks}
+        />
         <BookList books={this.state.books}/>
       </main>
     );
